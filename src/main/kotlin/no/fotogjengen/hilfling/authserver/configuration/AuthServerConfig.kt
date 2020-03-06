@@ -102,13 +102,6 @@ class AuthServerConfig(
                 .authorizedGrantTypes("authorization_code")
                 .scopes("read")
                 .autoApprove(true)
-                .and()
-                .withClient("private")
-                .secret("{noop}secret")
-                .redirectUris("http://private-client/")
-                .authorizedGrantTypes("authorization_code")
-                .scopes("read")
-                .autoApprove(true)
     }
 
     /*@Throws(Exception::class)
