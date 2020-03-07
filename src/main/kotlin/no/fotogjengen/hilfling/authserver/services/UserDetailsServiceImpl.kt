@@ -18,7 +18,7 @@ class UserDetailsServiceImpl(
     override fun loadUserByUsername(username: String): UserDetails {
         val user = userRepository.findByUsername(username)
         val grantedAuthorities = HashSet<GrantedAuthority>()
-        grantedAuthorities.add(SimpleGrantedAuthority(user.role.toString()))
-        return User(user.username, user.password, grantedAuthorities)
+        grantedAuthorities.add(SimpleGrantedAuthority(user?.role.toString()))
+        return User(user?.username, user?.password, grantedAuthorities)
     }
 }

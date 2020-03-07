@@ -27,12 +27,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 @Configuration
 @EnableAuthorizationServer
 class AuthServerConfig(
-        passwordEncoder: PasswordEncoder,
-        authenticationManager: AuthenticationManager
+        private val passwordEncoder: PasswordEncoder,
+        private val authenticationManager: AuthenticationManager
 ) : AuthorizationServerConfigurerAdapter() {
-
-    private final val authenticationManager: AuthenticationManager = authenticationManager
-    private final val passwordEncoder: PasswordEncoder = passwordEncoder
 
     @Bean
     fun accessTokenConverter(): JwtAccessTokenConverter {
