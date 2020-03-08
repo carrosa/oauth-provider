@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer
+import org.springframework.security.oauth2.provider.ClientDetailsService
 import org.springframework.security.oauth2.provider.CompositeTokenGranter
 import org.springframework.security.oauth2.provider.TokenGranter
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenGranter
@@ -28,7 +29,8 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 @EnableAuthorizationServer
 class AuthServerConfig(
         private val passwordEncoder: PasswordEncoder,
-        private val authenticationManager: AuthenticationManager
+        private val authenticationManager: AuthenticationManager,
+        private val clientDetailsService: ClientDetailsService
 ) : AuthorizationServerConfigurerAdapter() {
 
     @Bean
@@ -90,7 +92,7 @@ class AuthServerConfig(
         return CompositeTokenGranter(granters)
     }
 
-    @Throws(Exception::class)
+    /*@Throws(Exception::class)
     override fun configure(clients: ClientDetailsServiceConfigurer) {
         clients.inMemory()
                 .withClient("public")
@@ -99,10 +101,10 @@ class AuthServerConfig(
                 .authorizedGrantTypes("authorization_code")
                 .scopes("read")
                 .autoApprove(true)
-    }
-
-    /*@Throws(Exception::class)
-    override fun configure(clients: ClientDetailsServiceConfigurer) {
-
     }*/
+
+    @Throws(Exception::class)
+    override fun configure(clients: ClientDetailsServiceConfigurer) {
+        clients.withClientDetails(clientDetailsService)
+    }
 }

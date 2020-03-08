@@ -1,13 +1,14 @@
 package no.fotogjengen.hilfling.authserver
 
+import no.fotogjengen.hilfling.authserver.entities.Client
 import no.fotogjengen.hilfling.authserver.entities.WhitelistedEmailDomain
 import no.fotogjengen.hilfling.authserver.entities.User
 import no.fotogjengen.hilfling.authserver.entities.WhitelistedEmail
 import no.fotogjengen.hilfling.authserver.enums.Role
+import no.fotogjengen.hilfling.authserver.repositories.ClientRepository
 import no.fotogjengen.hilfling.authserver.repositories.EmailDomainWhitelistRepository
 import no.fotogjengen.hilfling.authserver.repositories.EmailWhitelistRepository
 import no.fotogjengen.hilfling.authserver.repositories.UserRepository
-import org.slf4j.LoggerFactory
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -18,13 +19,16 @@ class Bootstrap(
         private val userRepository: UserRepository,
         private val domainWhitelistRepository: EmailDomainWhitelistRepository,
         private val emailWhitelistRepository: EmailWhitelistRepository,
+        private val clientRepository: ClientRepository,
         private val passwordEncoder: PasswordEncoder
 ) : ApplicationListener<ApplicationReadyEvent> {
 
-    val LOG = LoggerFactory.getLogger(Bootstrap::class.java)
+    /*
+    * Bootstrap application with default values in database
+    * Populates using respective repositories
+    * */
 
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
-        LOG.info("Verifying if default user exists")
         createUserWithRole(
                 "carosa",
                 "pass",
@@ -33,6 +37,7 @@ class Bootstrap(
         )
         createWhitelistedEmailDomain("samfundet.no")
         createWhitelistedEmail("carolinesandsbraten@gmail.com")
+        createClient("public")
     }
 
     private fun createUserWithRole(username: String, password: String, email: String, authority: Role) {
@@ -61,6 +66,18 @@ class Bootstrap(
         if (emailWhitelistRepository.findByEmail(email) == null) {
             val whitelistedEmail = WhitelistedEmail(email = email)
             emailWhitelistRepository.save(whitelistedEmail)
+        }
+    }
+
+    private fun createClient(clientId: String) {
+        if (clientRepository.findByClientId(clientId) == null) {
+            val client = Client(
+                    clientSecret = "{noop}",
+                    scope = mutableSetOf("read"),
+                    registeredRedirectUri = mutableSetOf("http://public-client/", "localhost:8080"),
+                    clientId = clientId
+            )
+            clientRepository.save(client)
         }
     }
 }
