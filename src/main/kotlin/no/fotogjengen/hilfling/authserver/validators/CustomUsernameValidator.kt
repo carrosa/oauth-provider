@@ -6,6 +6,10 @@ import java.util.stream.Collectors
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
+
+/*
+* Validator for usernames, invoked by @ValidUsername annotation
+* */
 class CustomUsernameValidator(
         private val userService: UserService
 ) : ConstraintValidator<ValidUsername, String> {
@@ -13,6 +17,11 @@ class CustomUsernameValidator(
     private val MINIMUM_USERNAME_LENGTH = 4
 
     override fun isValid(username: String, context: ConstraintValidatorContext): Boolean {
+        /*
+      * @param username, Username to validate
+      * @param context, Context passed back to frontend template with constraint messages
+      * @return Boolean, Is the username valid or not
+      * */
         val messages = ArrayList<String>()
         if (username.length < MINIMUM_USERNAME_LENGTH) {
             messages.add(String.format("Username must me at least %s characters long", MINIMUM_USERNAME_LENGTH))

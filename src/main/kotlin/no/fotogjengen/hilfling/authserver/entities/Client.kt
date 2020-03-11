@@ -1,11 +1,13 @@
 package no.fotogjengen.hilfling.authserver.entities
 
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
 import javax.persistence.*
 
-@Entity
-@Table(name = "auth_client")
+
+/*
+* Database entity class to hold oauth client information
+* */
+@Entity // Is a database entity
+@Table(name = "auth_client") // Table name in DB is auth_client
 data class Client(
 
         @Id

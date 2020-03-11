@@ -17,8 +17,8 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.ModelAndView
 import javax.validation.Valid
 
-@FrameworkEndpoint
-@RequestMapping("/user/register")
+@FrameworkEndpoint // Endpoint part of framework
+@RequestMapping("/user/register") // Path
 class Register(
         private val service: UserService,
         private val passwordEncoder: PasswordEncoder
@@ -26,6 +26,10 @@ class Register(
 
     @GetMapping
     fun getUserRegistrationForm(request: WebRequest, model: Model): String {
+        /*
+        * Binds UserDTO to form served in registration.html
+        * @return registration html template
+        * */
         val user = UserDTO()
         model.addAttribute("user", user)
         return "registration"
@@ -36,7 +40,12 @@ class Register(
             @ModelAttribute("user") @Valid user: UserDTO,
             result: BindingResult, request: WebRequest, errors: Errors
     ): ModelAndView {
-
+        /*
+        * @param user, validated UserDTO object
+        * @return registration form with error messages
+        *  or
+        * successfulRegistration template if registration is successful
+        * */
         return if (!result.hasErrors()) {
             service.registerNewUserAccount(User(user, Role.HUSFOLK, passwordEncoder))
             ModelAndView("successfulRegistration", "user", user)
