@@ -1,7 +1,10 @@
 package no.fotogjengen.hilfling.authserver.entities
 
+import no.fotogjengen.hilfling.authserver.annotations.ValidEmail
+import no.fotogjengen.hilfling.authserver.dtos.UserDTO
 import no.fotogjengen.hilfling.authserver.enums.Role
 import org.hibernate.annotations.CreationTimestamp
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 import javax.persistence.*
 import javax.validation.constraints.Email
@@ -26,7 +29,7 @@ data class User(
         val lastName: String,
 
         @Column(nullable = false)
-        @Email(message = "Please provide a valid email." /* TODO: Add regex to only accept @samfundet.no emails */)
+        @ValidEmail
         val email: String,
 
         @Column(nullable = false)
@@ -39,4 +42,15 @@ data class User(
         @Column
         @CreationTimestamp
         val dateCreated: Date = Calendar.getInstance().time
-)
+) {
+
+        constructor(userDTO: UserDTO, role: Role, passwordEncoder: PasswordEncoder) : this(
+                username = userDTO.username,
+                password = passwordEncoder.encode(userDTO.password),
+                firstName = userDTO.firstName,
+                lastName = userDTO.lastName,
+                email = userDTO.email,
+                role = role,
+                enabled = false
+        )
+}
