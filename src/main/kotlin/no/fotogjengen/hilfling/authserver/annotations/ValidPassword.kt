@@ -6,10 +6,10 @@ import javax.validation.Payload
 import kotlin.reflect.KClass
 
 
-@MustBeDocumented
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.TYPE, AnnotationTarget.FIELD, AnnotationTarget.ANNOTATION_CLASS)
-@Constraint(validatedBy = [CustomPasswordValidator::class])
+@MustBeDocumented // annotation is part of a public API
+@Retention(AnnotationRetention.RUNTIME) // Invoke on runtime
+@Target(AnnotationTarget.FIELD) // Annotation can be used on fields
+@Constraint(validatedBy = [CustomPasswordValidator::class]) // Validated by CustomPasswordValidator
 annotation class ValidPassword (
         val message: String = "Invalid password",
         val groups: Array<KClass<*>> = [],

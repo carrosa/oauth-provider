@@ -10,7 +10,10 @@ import java.security.KeyPair
 import java.security.interfaces.RSAPublicKey
 
 
-@FrameworkEndpoint
+/*
+* Sets up endpoint for clients to find JWKs used to verify their received access tokens
+* */
+@FrameworkEndpoint // Endpoint is part of the framework (oauth2)
 class JwkSetEndpoint {
     val keyPair: KeyPair
 

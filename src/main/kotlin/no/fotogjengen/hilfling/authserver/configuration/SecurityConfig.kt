@@ -11,6 +11,11 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 
+
+/*
+* Security configuration
+* Defines everything to do with access control
+* */
 @Configuration
 class SecurityConfig(
         @Qualifier("customUserDetailsService")
@@ -19,6 +24,9 @@ class SecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
+        /*
+        * Return a password encoder (using bcrypt)
+        * */
         return PasswordEncoderFactories.createDelegatingPasswordEncoder()
     }
 
@@ -30,6 +38,9 @@ class SecurityConfig(
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
+        /*
+        * Define which urls need to be authenticated and which ones are open to the public
+        * */
         http.requestMatchers().antMatchers("/login", "/oauth/authorize")
                 .and()
                 .authorizeRequests().mvcMatchers("/.well-known/jwks.json").permitAll()
@@ -41,10 +52,9 @@ class SecurityConfig(
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
+        /*
+        * Defines where to find users when authenticating (basically userDB)
+        * */
         auth.userDetailsService(userDetailsService)
-        /*auth.inMemoryAuthentication()
-                .withUser("carosa")
-                .password(passwordEncoder().encode("pass"))
-                .roles("USER")*/
     }
 }

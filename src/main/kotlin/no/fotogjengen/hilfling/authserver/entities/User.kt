@@ -7,10 +7,13 @@ import org.hibernate.annotations.CreationTimestamp
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 import javax.persistence.*
-import javax.validation.constraints.Email
 
-@Entity
-@Table(name = "auth_user")
+
+/*
+* User database entity
+* */
+@Entity // Is a database entity
+@Table(name = "auth_user") // Table name in DB is auth_user
 data class User(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

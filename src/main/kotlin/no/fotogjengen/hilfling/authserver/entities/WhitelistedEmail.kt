@@ -3,9 +3,11 @@ package no.fotogjengen.hilfling.authserver.entities
 import javax.persistence.*
 import javax.validation.constraints.Email
 
-
-@Entity
-@Table(name = "whitelisted_email")
+/*
+* Holds whitelisted emails
+* */
+@Entity // Is a database entity
+@Table(name = "whitelisted_email") // Table name in DB is whitelisted_email
 data class WhitelistedEmail(
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)

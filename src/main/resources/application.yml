@@ -1,20 +1,20 @@
 server:
-  port: 9000
+  port: 9000 # port number application run on
 
 spring:
   datasource:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
-    url: jdbc:postgresql://localhost:5432/authdb
-    username: postgres
-    password: example
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/authdb # database URI
+    username: postgres # database username
+    password: example # database password
+    driver-class-name: org.postgresql.Driver # Defines which database driver for spring to use
   jpa:
-    show-sql: true
+    show-sql: true # Should SQL statements be printed to console
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect # Which dialect should hibernate jpa translate to
         auto-ddl: drop-create
         ddl-auto: drop-create
         jdbc:

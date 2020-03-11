@@ -8,6 +8,10 @@ import no.fotogjengen.hilfling.authserver.annotations.ValidUsername
 import javax.validation.constraints.NotNull
 
 
+/*
+* Data class used in /users/register endpoint to pass data
+* This is what is required by the user to fill in when registering
+* */
 data class UserDTO(
         @NotNull
         @ValidUsername
@@ -29,6 +33,7 @@ data class UserDTO(
         @ValidEmail
         val email: String
 ) {
+    // Empty constructor, needed for thymeleaf form initialization
     constructor() : this(
             username = "",
             password = "",

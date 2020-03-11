@@ -6,9 +6,18 @@ import java.util.stream.Collectors
 import javax.validation.ConstraintValidator
 import javax.validation.ConstraintValidatorContext
 
+
+/*
+* Validator for passwords, invoked by @ValidPassword annotation
+* */
 class CustomPasswordValidator : ConstraintValidator<ValidPassword, String> {
 
     override fun isValid(password: String, context: ConstraintValidatorContext): Boolean {
+        /*
+       * @param password, Password to validate
+       * @param context, Context passed back to frontend template with constraint messages
+       * @return Boolean, Is the password valid or not
+       * */
         val validator = PasswordValidator(
                 arrayListOf(
                         LengthRule(8, 300),
