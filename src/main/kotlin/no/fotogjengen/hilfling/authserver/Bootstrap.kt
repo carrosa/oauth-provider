@@ -102,9 +102,12 @@ class Bootstrap(
         if (clientRepository.findByClientId(clientId) == null) {
             val client = Client(
                     clientSecret = "{noop}",
-                    scope = mutableSetOf("read"),
-                    registeredRedirectUri = mutableSetOf("http://public-client/", "localhost:8080"),
-                    clientId = clientId
+                    scope = arrayListOf("read"),
+                    registeredRedirectUri = arrayListOf("http://public-client/", "localhost:8080"),
+                    clientId = clientId,
+                    authorizedGrantTypes = arrayListOf(
+                            "authorization_code"
+                    ) // default authorization code
             )
             clientRepository.save(client)
         }

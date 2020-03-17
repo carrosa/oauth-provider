@@ -26,6 +26,7 @@ class UserDetailsServiceImpl(
         * @param username, username to be authenticated
         * @return UserDetails, empty UserDetails if no user with username exist
         * */
+        print("test")
         val user = userRepository.findByUsername(username)
         val grantedAuthorities = HashSet<GrantedAuthority>()
         grantedAuthorities.add(SimpleGrantedAuthority(user?.role.toString()))

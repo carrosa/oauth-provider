@@ -127,6 +127,18 @@ class AuthServerConfig(
         /*
         * Define where to get clients from
         * */
-        clients.withClientDetails(clientDetailsService)
+        // clients.withClientDetails(clientDetailsService) TODO make this work (for dynamic client registration)
+        clients.inMemory()
+                .withClient("public")
+                .secret("{noop}")
+                .redirectUris(
+                        "http://localhost/",
+                        "http://localhost:9000/",
+                        "http://localhost:8000/",
+                        "http://localhost:3000/"
+                )
+                .authorizedGrantTypes("authorization_code")
+                .scopes("read")
+                .autoApprove(true)
     }
 }

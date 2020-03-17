@@ -31,7 +31,7 @@ class ClientDetailsServiceImpl(
             client.setScope(loadedClient.scope)
             client.accessTokenValiditySeconds = loadedClient.accessTokenValiditySeconds
             client.refreshTokenValiditySeconds = loadedClient.refreshTokenValiditySeconds
-            client.registeredRedirectUri = loadedClient.registeredRedirectUri
+            client.registeredRedirectUri = loadedClient.registeredRedirectUri.toSet()
             return client
         }
         return null

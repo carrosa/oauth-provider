@@ -27,14 +27,12 @@ data class Client(
         val clientSecret: String,
 
         @Column(nullable = false)
-        val registeredRedirectUri: MutableSet<String>,
+        val registeredRedirectUri: ArrayList<String>,
 
         @Column(nullable = false)
-        val scope: MutableSet<String>,
+        val scope: ArrayList<String>,
 
         @Column(nullable = false)
-        val authorizedGrantTypes: MutableSet<String> = mutableSetOf(
-                "authorization_code"
-        ) // default authorization code
+        val authorizedGrantTypes: ArrayList<String>
 
 )

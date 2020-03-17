@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.util.*
 import javax.persistence.*
+import javax.validation.constraints.Email
 
 
 /*
@@ -32,7 +33,7 @@ data class User(
         val lastName: String,
 
         @Column(nullable = false)
-        @ValidEmail
+        @Email
         val email: String,
 
         @Column(nullable = false)
